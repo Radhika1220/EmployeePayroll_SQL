@@ -20,3 +20,8 @@ Insert into employee_payroll values ('Arun',60000,'2021-03-13','arun12@gmail.com
 
 ----------UC4--------------
 select * from employee_payroll;
+
+--------UC5-----------
+select name,salary from employee_payroll where name='Kishore';
+-------------UC5----------------
+select name,salary from employee_payroll where startDate between ('2021-05-01') and getdate();
