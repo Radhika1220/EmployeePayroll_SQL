@@ -62,6 +62,12 @@ update employee_payroll set PhoneNumber=9874512458 where name='Priya';
 update employee_payroll set PhoneNumber=894561254 where name='Ajoy';
 
 
+update employee_payroll set Department='HR' where name='Kishore';
+update employee_payroll set Department='Accounts and Finance' where name='Arun';
+update employee_payroll set Department='Product development' where name='Radhika';
+update employee_payroll set Department='Business development' where name='Priya';
+update employee_payroll set Department='Research development' where name='Ajoy';
+
 alter table employee_payroll add Address varchar(25) default 'Not Provided';
 
 
@@ -70,3 +76,25 @@ update employee_payroll set Address='Bangalore' where name='Arun';
 update employee_payroll set Address='Puducherry' where name='Radhika';
 update employee_payroll set Address='Mumbai' where name='Priya';
 update employee_payroll set Address='Bhopal' where name='Ajoy';
+
+------------UC9-------------------
+Exec sp_rename 'employee_payroll.salary','Basic Pay','COLUMN';
+
+alter table employee_payroll add Deductions float,TaxablePay float,IncomeTax float,NetPay float;
+
+update employee_payroll set Deductions=1500 where Department='HR';
+update employee_payroll set Deductions=1700 where Department='Accounts and Finance'
+update employee_payroll set Deductions=2100 where Department='Product development';
+update employee_payroll set Deductions=1570 where Department='Business development' ;
+update employee_payroll set Deductions=2212 where Department='Research development';
+
+
+update employee_payroll set NetPay=53500 where name='Kishore';
+update employee_payroll set NetPay=58300 where name='Arun';
+update employee_payroll set NetPay=32900 where name='Radhika';
+update employee_payroll set NetPay=48430 where name='Priya';
+update employee_payroll set NetPay=67788 where name='Ajoy';
+
+update employee_payroll set IncomeTax=1000;
+
+update employee_payroll set TaxablePay=300;
