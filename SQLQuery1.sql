@@ -189,3 +189,48 @@ Insert into EmployeeDept(Dept_Id,Employee_Id) values
 (2,5);
 --Retrieve the data
 select * from EmployeeDept;
+
+--UC12----> Ensure all retrieve queries done especially in UC 4, UC 5 and UC 7 are working with new table structure--------
+
+---UC4-->Retrieve the data 
+Select CompanyID,CompanyName,
+EmployeeID,EmployeeName,EmployeeAddress,EmployeePhoneNum,StartDate,Gender,
+BasicPay,TaxablePay,IncomeTax,NetPay,Deductions,DepartmentId,DepartName
+from Company
+inner join Employee on Company.CompanyID=Employee.Company_Id
+inner join PayRollCalculate on PayRollCalculate.Employee_Id=Employee.EmployeeId
+inner join EmployeeDept on EmployeeDept.Employee_Id=Employee.EmployeeID
+inner join DepartmentTable on DepartmentTable.DepartmentId=EmployeeDept.Dept_Id; 
+
+-------UC5---->Retrieve the data using employeename 
+select CompanyID,CompanyName,EmployeeID,EmployeeName,EmployeeAddress,EmployeePhoneNum,StartDate,Gender
+from Company
+inner join Employee on Company.CompanyID=Employee.Company_Id and Employee.EmployeeName='Vishnu Priya';
+
+-------UC5------->Retrieve the data from startdate and now(current date)
+select CompanyID,CompanyName,EmployeeID,EmployeeName,StartDate,BasicPay 
+from Company
+inner join Employee on Company.CompanyID=Employee.Company_Id and StartDate between Cast('2019-01-01' as Date) and GetDate()
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id;
+
+-----UC7----->Performing aggregate Functions using group by...
+Select sum(BasicPay) as TotalSalary,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id group by Gender;
+
+Select Avg(BasicPay) as AvgSalary,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id group by gender;
+
+Select min(BasicPay) as MinSalary,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id group by Gender;
+
+Select max(BasicPay) as MaxSalary,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id 
+where Gender='F' group by Gender;
+
+Select count(BasicPay) as CountOfPersons,Gender 
+from Employee
+inner join PayRollCalculate on Employee.EmployeeID=PayRollCalculate.Employee_Id group by Gender;
