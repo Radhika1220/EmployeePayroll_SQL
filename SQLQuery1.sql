@@ -104,3 +104,88 @@ update employee_payroll set TaxablePay=300;
 Insert into employee_payroll values('Kishore',55000,'2021-05-23','kishore@yahoo.com','M',8945125478,'HR','Chennai',1500,300,1000,53500);
 
 select * from employee_payroll;
+
+
+---------------UC11---->Implement the ER Diagram------
+---Company Table
+Create Table Company
+(CompanyID int identity(1,1) primary key,
+CompanyName varchar(100))
+---Insert the values
+Insert into Company values ('Praveena'),('Sumathi')
+---Retrieve the data
+select * from company;
+
+--Create Employee Table
+create table Employee
+(EmployeeID int identity(1,1) primary key,
+Company_Id int,
+EmployeeName varchar(200),
+EmployeePhoneNum bigInt,
+EmployeeAddress varchar(200),
+StartDate date,
+Gender char,
+Foreign key (Company_Id) references Company(CompanyID)
+)
+---Insert the employee table
+insert into Employee (Company_Id,EmployeeName,EmployeePhoneNum,EmployeeAddress,StartDate,Gender)values
+(1,'Priyadarshini','9845781542','602 Seneca Drive','2018-09-15','F'),
+(2,'Vishnu Priya','8954785124',' 2897 Freshour Circle, 94533','2019-03-12','F'),
+(1,'Subhiksha','9874587158','4682 Hilltop Street','2020-02-06','F'),
+(2,'Rajkumar','8974587197','4133 Hartway Street','2021-01-16','M');
+---Retrieve the data
+Select * from employee;
+
+--Create Payroll Table
+create table PayRollCalculate
+(
+Employee_Id int,
+BasicPay float,
+TaxablePay float,
+IncomeTax float,
+NetPay float,
+Deductions float,
+Foreign key (Employee_Id) references Employee(EmployeeID)
+)
+---Insert the values in payrollcalculate table
+Insert into PayRollCalculate (Employee_Id,BasicPay,IncomeTax,Deductions)values
+(2,50000,1000,1500),
+(3,60000,1432,1700),
+(4,75000,1300,1870),
+(5,80000,3000,2300);
+---Retrieve the data
+Select * from PayRollCalculate;
+--Set the taxablepay and netpay value using update
+update PayRollCalculate set TaxablePay=BasicPay-Deductions;
+
+update PayRollCalculate set NetPay=TaxablePay-IncomeTax;
+
+--Create Department Table
+create table DepartmentTable
+(
+DepartmentId int identity(1,1) primary key,
+DepartName varchar(100)
+)
+--Insert the value
+Insert into DepartmentTable values
+('HR'),
+('Accounts and Finance'),
+('Product development');
+--Retrieve the data
+Select * from DepartmentTable;
+----Create Employee Department table
+create table EmployeeDept
+(
+Dept_Id int ,
+Employee_Id int,
+Foreign key (Employee_Id) references Employee(EmployeeID),
+Foreign key (Dept_Id) references DepartmentTable(DepartmentID)
+)
+------Insert the values in employeedept table
+Insert into EmployeeDept(Dept_Id,Employee_Id) values
+(1,2),
+(2,3),
+(3,4),
+(2,5);
+--Retrieve the data
+select * from EmployeeDept;
